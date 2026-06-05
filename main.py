@@ -112,7 +112,7 @@ with left:
     )
 
     if uploaded:
-        wb = openpyxl.load_workbook(uploaded)
+        wb = openpyxl.load_workbook(uploaded, data_only=True)
         ws = wb.active
         headers = [cell.value for cell in next(ws.iter_rows(min_row=1, max_row=1))]
         raw_rows = list(ws.iter_rows(min_row=2, values_only=True))
@@ -129,6 +129,9 @@ with left:
                 buf = io.BytesIO()
                 c = canvas.Canvas(buf, pagesize=letter)
                 for _, row in df.iterrows():
+                    name = row.get("Name")
+                    if not name or str(name).strip() == "":
+                        continue
                     date = row.get("Date", "")
                     date_str = (
                         date.strftime("%m/%d/%Y")
@@ -138,9 +141,9 @@ with left:
                     render_check_page(
                         c,
                         date=date_str,
-                        payee=str(row.get("Name") or ""),
+                        payee=str(name).strip(),
                         amount=float(row.get("Amount") or 0),
-                        memo=str(row.get("Memo") or ""),
+                        memo=str(row.get("Memo") or "").strip(),
                     )
                 c.save()
                 buf.seek(0)

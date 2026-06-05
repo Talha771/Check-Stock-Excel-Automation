@@ -9,7 +9,7 @@ def _amount_in_words(amount: float) -> str:
     dollars = int(amount)
     cents = round((amount - dollars) * 100)
     words = num2words(dollars, lang="en").replace(",", "").title()
-    return f"{words} and {cents:02d}/100 Dollars"
+    return f"{words} and {cents:02d}/100 Dollars ***"
 
 
 def render_check(output_path, template_path, date, payee, amount, memo):
