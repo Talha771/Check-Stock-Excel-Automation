@@ -135,7 +135,7 @@ with left:
                     date = row.get("Date", "")
                     date_str = (
                         date.strftime("%m/%d/%Y")
-                        if hasattr(date, "strftime")
+                        if hasattr(date, "strftime") and not pd.isnull(date)
                         else str(date or "")
                     )
                     render_check_page(
