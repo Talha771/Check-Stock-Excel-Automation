@@ -16,11 +16,11 @@ def render_check(output_path, template_path, date, payee, amount, memo):
 
     c = canvas.Canvas(output_path, pagesize=letter)
 
-    c.drawString(520, 738, date)
-    c.drawString(80, 703, payee)
-    c.drawString(520, 703, amt_dollar)
-    c.drawString(80, 683, amt_in_words)
-    c.drawString(80, 606, memo)
+    c.drawString(520, 720, date)
+    c.drawString(80, 685, payee)
+    c.drawString(520, 685, amt_dollar)
+    c.drawString(80, 665, amt_in_words)
+    c.drawString(80, 588, memo)
 
     draw_stub(c, x=25, y=500, width=560, date=date, payee=payee, amount=amount, memo=memo)
     draw_stub(c, x=25, y=250, width=560, date=date, payee=payee, amount=amount, memo=memo)
