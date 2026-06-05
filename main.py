@@ -117,6 +117,9 @@ with left:
         headers = [cell.value for cell in next(ws.iter_rows(min_row=1, max_row=1))]
         raw_rows = list(ws.iter_rows(min_row=2, values_only=True))
         df = pd.DataFrame(raw_rows, columns=headers)
+        df = df[df["Name"].notna() & (df["Name"].astype(str).str.strip() != "")]
+        df = df[df["Amount"].notna()]
+        df = df.reset_index(drop=True)
 
         st.metric("Checks found", len(df))
 
