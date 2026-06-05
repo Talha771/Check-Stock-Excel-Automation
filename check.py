@@ -4,9 +4,17 @@ from num2words import num2words
 from stub import draw_stub
 
 
+def _amount_in_words(amount: float) -> str:
+    """Return financial check format: 'One Thousand Five Hundred and 00/100 Dollars'."""
+    dollars = int(amount)
+    cents = round((amount - dollars) * 100)
+    words = num2words(dollars, lang="en").replace(",", "").title()
+    return f"{words} and {cents:02d}/100 Dollars"
+
+
 def render_check(output_path, template_path, date, payee, amount, memo):
     amt_dollar = f"${amount}"
-    amt_in_words = num2words(amount)
+    amt_in_words = _amount_in_words(amount)
 
     c = canvas.Canvas(output_path, pagesize=letter)
 
@@ -25,7 +33,7 @@ def render_check(output_path, template_path, date, payee, amount, memo):
 def render_check_page(c, date, payee, amount, memo):
     """Draw one check onto an existing canvas and advance to the next page."""
     amt_dollar = f"${amount}"
-    amt_in_words = num2words(amount)
+    amt_in_words = _amount_in_words(amount)
 
     c.drawString(520, 738, date)
     c.drawString(80, 703, payee)
