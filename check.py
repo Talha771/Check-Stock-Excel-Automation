@@ -13,7 +13,7 @@ def _amount_in_words(amount: float) -> str:
 
 
 def render_check(output_path, template_path, date, payee, amount, memo):
-    amt_dollar = f"${amount}"
+    amt_dollar = f"${amount:.2f}"
     amt_in_words = _amount_in_words(amount)
 
     c = canvas.Canvas(output_path, pagesize=letter)
@@ -32,7 +32,7 @@ def render_check(output_path, template_path, date, payee, amount, memo):
 
 def render_check_page(c, date, payee, amount, memo):
     """Draw one check onto an existing canvas and advance to the next page."""
-    amt_dollar = f"${amount}"
+    amt_dollar = f"${amount:.2f}"
     amt_in_words = _amount_in_words(amount)
 
     c.drawString(520, 738, date)
