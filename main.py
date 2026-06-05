@@ -10,6 +10,12 @@ from reportlab.pdfgen import canvas
 from check import render_check_page
 
 
+def _filter_checks(df: pd.DataFrame) -> pd.DataFrame:
+    df = df[df["Name"].notna() & (df["Name"].astype(str).str.strip() != "")]
+    df = df[df["Amount"].notna()]
+    return df.reset_index(drop=True)
+
+
 def _make_template_bytes() -> bytes:
     wb = openpyxl.Workbook()
     ws = wb.active
@@ -116,10 +122,7 @@ with left:
         ws = wb.active
         headers = [cell.value for cell in next(ws.iter_rows(min_row=1, max_row=1))]
         raw_rows = list(ws.iter_rows(min_row=2, values_only=True))
-        df = pd.DataFrame(raw_rows, columns=headers)
-        df = df[df["Name"].notna() & (df["Name"].astype(str).str.strip() != "")]
-        df = df[df["Amount"].notna()]
-        df = df.reset_index(drop=True)
+        df = _filter_checks(pd.DataFrame(raw_rows, columns=headers))
 
         st.metric("Checks found", len(df))
 
@@ -134,10 +137,6 @@ with left:
                 for _, row in df.iterrows():
                     name = row.get("Name")
                     amount = row.get("Amount")
-                    if not name or str(name).strip() == "" or pd.isnull(name):
-                        continue
-                    if amount is None or pd.isnull(amount):
-                        continue
                     date = row.get("Date", "")
                     date_str = (
                         date.strftime("%m/%d/%Y")
