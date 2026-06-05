@@ -130,7 +130,10 @@ with left:
                 c = canvas.Canvas(buf, pagesize=letter)
                 for _, row in df.iterrows():
                     name = row.get("Name")
-                    if not name or str(name).strip() == "":
+                    amount = row.get("Amount")
+                    if not name or str(name).strip() == "" or pd.isnull(name):
+                        continue
+                    if amount is None or pd.isnull(amount):
                         continue
                     date = row.get("Date", "")
                     date_str = (
