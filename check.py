@@ -33,11 +33,11 @@ def render_check_page(c, date, payee, amount, memo):
     amt_dollar = f"${amount:.2f}"
     amt_in_words = _amount_in_words(amount)
 
-    c.drawString(520, 738, date)
-    c.drawString(80, 703, payee)
-    c.drawString(520, 703, amt_dollar)
-    c.drawString(80, 683, amt_in_words)
-    c.drawString(80, 606, memo)
+    c.drawString(520, 720, date)
+    c.drawString(80, 690, payee)
+    c.drawString(520, 690, amt_dollar)
+    c.drawString(80, 665, amt_in_words)
+    c.drawString(80, 595, memo)
 
     draw_stub(c, x=25, y=500, width=560, date=date, payee=payee, amount=amount, memo=memo)
     draw_stub(c, x=25, y=250, width=560, date=date, payee=payee, amount=amount, memo=memo)
