@@ -7,7 +7,7 @@ from stub import draw_stub
 def _amount_in_words(amount: float) -> str:
     dollars = int(amount)
     words = num2words(dollars, lang="en").replace(",", "").title()
-    return f"{words} Dollars ***"
+    return f"{words} Dollars    "
 
 
 def render_check(output_path, template_path, date, payee, amount, memo):
@@ -34,10 +34,10 @@ def render_check_page(c, date, payee, amount, memo):
     amt_in_words = _amount_in_words(amount)
 
     c.drawString(520, 720, date)
-    c.drawString(80, 690, payee)
-    c.drawString(520, 690, amt_dollar)
+    c.drawString(80, 685, payee)
+    c.drawString(520, 685, amt_dollar)
     c.drawString(80, 665, amt_in_words)
-    c.drawString(80, 595, memo)
+    c.drawString(80, 588, memo)
 
     draw_stub(c, x=25, y=500, width=560, date=date, payee=payee, amount=amount, memo=memo)
     draw_stub(c, x=25, y=250, width=560, date=date, payee=payee, amount=amount, memo=memo)
